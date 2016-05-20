@@ -14,9 +14,97 @@
 
 @implementation ViewController
 
+-(void) doCountUp: (UIButton *)button {
+    self.count++;
+    [self updateDisplay];
+
+}
+-(void) doCountDown: (UIButton *)button {
+    self.count--;
+    [self updateDisplay];
+
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.countTextField resignFirstResponder];
+    
+}
+
+
+-(void)doTextfieldchanged:(UITextField *)theTextField{
+    int newCount = [theTextField.text intValue];
+    self.count = newCount;
+    [self updateDisplay];
+    
+}
+
+
+-(void) doCountClear: (UIButton *)button {
+    self.count = 0;
+    [self updateDisplay];
+}
+-(void) updateDisplay {
+    NSString *s = [NSString stringWithFormat:@"Count = %i",self.count];
+    self.countLabel.text = s;
+}
+
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    CGFloat leftBounds = 20;
+    CGFloat rightBounds = 20;
+    CGFloat width = self.view.bounds.size.width - leftBounds-rightBounds;
+    CGFloat height = 44;
+    CGRect rect = CGRectMake(20, 20, width, height);
+    
+    self.myApp = [[UILabel alloc] initWithFrame:rect];
+    self.myApp.text = @"This Program by Frederik Nygaard";
+    self.myApp.backgroundColor = [UIColor lightGrayColor];
+    [self.view addSubview:self.myApp];
+    
+    rect.origin.y += height;
+    self.countLabel = [[UILabel alloc] initWithFrame:rect];
+    self.countLabel.text = @"Count: 0";
+    self.countLabel.backgroundColor = [UIColor yellowColor];
+    [self.view addSubview:self.countLabel];
+    
+    rect.origin.y += height;
+    self.countUp= [[UIButton alloc]initWithFrame:rect];
+    self.countUp.backgroundColor = [UIColor orangeColor];
+    [self.countUp setTitle:@"Count Up" forState:UIControlStateNormal];
+    [self.countUp addTarget:self action:@selector(doCountUp:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:self.countUp];
+    
+    
+    rect.origin.y += height;
+    self.countDown = [[UIButton alloc]initWithFrame:rect];
+    self.countDown.backgroundColor = [UIColor redColor];
+    [self.countDown setTitle:@"Count Down" forState:UIControlStateNormal];
+    [self.countDown addTarget:self action:@selector(doCountDown:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:self.countDown];
+    
+    
+    rect.origin.y += height;
+    self.clearCount = [[UIButton alloc]initWithFrame:rect];
+    self.clearCount.backgroundColor = [UIColor greenColor];
+    [self.clearCount setTitle:@"Clear Count" forState:UIControlStateNormal];
+    [self.clearCount addTarget:self action:@selector(doCountClear:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:self.clearCount];
+    
+    rect.origin.y += height;
+    self.countTextField = [[UITextField alloc]initWithFrame:rect];
+    self.countTextField.backgroundColor = [UIColor whiteColor];
+    self.countTextField.placeholder = @"Enter Count";
+    self.countTextField.keyboardType = UIKeyboardTypeNumberPad;
+    [self.countTextField addTarget:self action:@selector(doTextfieldchanged:)
+        forControlEvents:UIControlEventEditingChanged];
+    
+    [self.view addSubview:self.countTextField];
+    
 }
 
 - (void)didReceiveMemoryWarning {

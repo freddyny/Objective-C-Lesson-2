@@ -9,7 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
+@property UILabel *myApp;
+@property int count;
+@property UIButton *countUp;
+@property UIButton *countDown;
+@property UIButton *clearCount;
+@property UITextField *countTextField;
 
+@property UILabel *countLabel;
 
 @end
 
