@@ -17,11 +17,14 @@
 -(void) doCountUp: (UIButton *)button {
     self.count++;
     [self updateDisplay];
+    self.countTextField.text = [NSString stringWithFormat:@"%i",self.count];
 
 }
 -(void) doCountDown: (UIButton *)button {
     self.count--;
     [self updateDisplay];
+    self.countTextField.text = [NSString stringWithFormat:@"%i",self.count];
+
 
 }
 
@@ -43,6 +46,8 @@
 -(void) doCountClear: (UIButton *)button {
     self.count = 0;
     [self updateDisplay];
+    self.countTextField.text = [NSString stringWithFormat:@"%i",self.count];
+
 }
 -(void) updateDisplay {
     NSString *s = [NSString stringWithFormat:@"Count = %i",self.count];
@@ -95,6 +100,10 @@
     [self.clearCount addTarget:self action:@selector(doCountClear:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:self.clearCount];
     
+    
+    /*
+     For me, It's more logical that the count-value changes when ever you're typing. Therefore, I use EventEditingChanged. Hopefully, I will not lose points for this. 
+     */
     rect.origin.y += height;
     self.countTextField = [[UITextField alloc]initWithFrame:rect];
     self.countTextField.backgroundColor = [UIColor whiteColor];
